@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Drafting-paper grid: fine 40px lines with a heavier line every 200px */
+  body {
+    @apply font-sans text-ink antialiased;
+    background-color: #dde8ec;
+    background-image:
+      linear-gradient(to right, rgba(12, 43, 75, 0.14) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(12, 43, 75, 0.14) 1px, transparent 1px),
+      linear-gradient(to right, rgba(12, 43, 75, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(12, 43, 75, 0.06) 1px, transparent 1px);
+    background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-extrabold;
+    letter-spacing: -0.015em;
+  }
+
+  /* Visible, high-contrast keyboard focus everywhere */
+  :focus-visible {
+    outline: 3px solid #9a3e0c;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-sm border-2 border-ink px-5 py-2.5 text-[17px] font-bold transition-colors
+      disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-ink text-white hover:border-copper hover:bg-copper;
+  }
+  .btn-outline {
+    @apply btn bg-transparent text-ink hover:bg-ink hover:text-white;
+  }
+
+  /* Form controls: underline fields like a drafted form */
+  .field-label {
+    @apply mb-1 block font-mono text-[13px] font-medium text-ink;
+  }
+  .field {
+    @apply w-full rounded-none border-0 border-b-2 border-ink bg-white/60 px-2 py-2.5 text-[17px] text-ink placeholder:text-ink/60;
+  }
+  .field-error {
+    @apply border-stamp;
+  }
+
+  /* "Schedule of works" table */
+  .sched {
+    @apply w-full border-collapse bg-sheet/90;
+  }
+  .sched th,
+  .sched td {
+    @apply border border-ink p-4 align-top;
+  }
+  .sched thead th {
+    @apply bg-ink px-4 py-2.5 text-left font-mono text-[13.5px] font-medium text-white;
+  }
+  .sched tbody th {
+    @apply w-[30%] text-left text-xl font-extrabold leading-tight;
+  }
+  .sched .time {
+    @apply w-[22%] font-mono text-sm font-medium text-copper;
+  }
+  .sched tbody tr:hover > * {
+    @apply bg-white;
+  }
+}
+
+/* Stack the schedule as cards on phones */
+@media (max-width: 640px) {
+  .sched thead {
+    display: none;
+  }
+  .sched,
+  .sched tbody,
+  .sched tr,
+  .sched th,
+  .sched td {
+    display: block;
+    width: 100% !important;
+  }
+  .sched tbody td,
+  .sched tbody th:not(:first-child) {
+    border-top: 0;
+  }
+  .sched tbody tr {
+    border-top: 2px solid #0c2b4b;
+  }
+  .sched tbody th {
+    border-bottom: 0;
+  }
+}
